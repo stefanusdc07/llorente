@@ -81,4 +81,32 @@ class SkuStock extends Model
     {
         return $this->belongsTo(Sku::class);
     }
+
+    public static function countStockWithType($type=null)
+    {
+        return SkuStock::where('type',$type)->count();
+    }
+
+    public static function sumStockWithType($type=null)
+    {
+       $sum = 0;
+       $stock =  SkuStock::where('type',$type)->get();
+       foreach ($stock as $key => $value) {
+            $sum += $value->sku->price;
+       }
+
+       return $sum;
+    }
+
+    public static function summariesStock()
+    {
+       $sum = 0;
+       foreach (\Domain\Shop\Stock\Enums\StockType::cases() as $key => $type) {
+            $stock =  SkuStock::where('type',$type)->get();
+            foreach ($stock as $key => $value) {
+                $sum += $value->sku->price;
+            }
+       }
+       return $sum;
+    }
 }

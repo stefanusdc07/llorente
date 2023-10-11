@@ -9,6 +9,8 @@ use App\Filament\Pages\Auth\Login;
 use App\Filament\Pages\Backups;
 use App\Filament\Pages\HealthCheckResults;
 use App\Http\Middleware\CheckMainAdminPanel;
+use App\Livewire\InventoryWidget;
+use App\Livewire\ProductionStatusWidget;
 use App\Providers\Filament\Versions\AppVersionProvider;
 use App\Providers\Filament\Versions\LivewireVersionProvider;
 use App\Providers\Macros\FilamentRadioMixin;
@@ -68,6 +70,8 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                InventoryWidget::class,
+                ProductionStatusWidget::class,
                 VersionsWidget::class,
             ])
             ->middleware([

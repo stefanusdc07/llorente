@@ -22,6 +22,7 @@
         "akaunting/laravel-money": "^5.1.2",
         "awcodes/filament-versions": "^2.0",
         "bezhansalleh/filament-language-switch": "^2.0.1",
+        "calebporzio/sushi": "*",
         "creativeorange/gravatar": "^1.0.23",
         "dedoc/scramble": "^0.8.3",
         "filament/filament": "^3.0.48",
