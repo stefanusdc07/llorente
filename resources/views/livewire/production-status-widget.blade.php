@@ -19,10 +19,22 @@
                     <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold">{{\Domain\Shop\Stock\Models\SkuStock::sumStockWithType($type)}}</td>
                 </tr>
                 @endforeach
-                <tr class="bg-gray-800">
-                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold text-green-500">Total</td>
-                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold"></td>
-                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold">{{\Domain\Shop\Stock\Models\SkuStock::summariesStock()}}</td>
+                @foreach(\Domain\Shop\Order\Enums\PaymentStatus::cases() as $payment)
+                    <tr class="dark:bg-gray-800">
+                        <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold text-green-500 text-right">{{$payment->getLabel()}}</td>
+                        <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold"></td>
+                        <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold">{{\Domain\Shop\Stock\Models\SkuStock::summariesStock($payment)}}</td>
+                    </tr>
+                @endforeach
+                <tr class="dark:bg-gray-800">
+                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold text-green-500">Order due in 4 week or less</td>
+                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold">{{\Domain\Shop\Order\Models\Order::orderIn4Week()->count()}}</td>
+                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold">{{\Domain\Shop\Order\Models\Order::orderIn4Week()->sum('total_price')}}</td>
+                </tr>
+                <tr class="dark:bg-gray-800">
+                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold text-green-500">Order due in 6 week or less</td>
+                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold">{{\Domain\Shop\Order\Models\Order::orderIn6Week()->count()}}</td>
+                    <td class="fi-ta-cell p-0 first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3 font-bold">{{\Domain\Shop\Order\Models\Order::orderIn6Week()->sum('total_price')}}</td>
                 </tr>
             </tbody>
         </table>

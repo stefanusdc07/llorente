@@ -28,7 +28,7 @@ class OrderStatusStatsOverview extends StatsOverviewWidget implements HasPermiss
             ),
             Stat::make(
                 trans('Paid orders this month'),
-                Order::wherePaymentStatus(PaymentStatus::PAID)
+                Order::wherePaymentStatus(PaymentStatus::RECEIVE)
                     ->where('created_at', '>', now()->subMonth())
                     ->count()
             ),

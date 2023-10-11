@@ -21,17 +21,17 @@ class TotalRevenueStats extends BaseWidget implements HasPermissionWidgets
     protected function getStats(): array
     {
         $revenueToday = Order::whereDate('created_at', date('Y-m-d'))
-            ->where('payment_status', PaymentStatus::PAID)
+            ->where('payment_status', PaymentStatus::RECEIVE)
             ->where('status', Status::COMPLETED)
             ->sum('total_price');
 
         $revenue7Days = Order::where('created_at', '>=', now()->subDays(7)->startOfDay())
-            ->where('payment_status', PaymentStatus::PAID)
+            ->where('payment_status', PaymentStatus::RECEIVE)
             ->where('status', Status::COMPLETED)
             ->sum('total_price');
 
         $revenue30Days = Order::where('created_at', '>=', now()->subDays(30)->startOfDay())
-            ->where('payment_status', PaymentStatus::PAID)
+            ->where('payment_status', PaymentStatus::RECEIVE)
             ->where('status', Status::COMPLETED)
             ->sum('total_price');
 

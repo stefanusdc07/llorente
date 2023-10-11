@@ -6,6 +6,7 @@ namespace Domain\Shop\Order\Models;
 
 use App\Casts\MoneyCast;
 use App\Helpers;
+use Carbon\Carbon;
 use Domain\Access\Admin\Models\Admin;
 use Domain\Shop\Branch\Models\Branch;
 use Domain\Shop\Customer\Models\Customer;
@@ -126,5 +127,19 @@ class Order extends Model
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    public static function orderIn4Week()
+    {
+        $order = Order::select('created_at')->first();
+        $week  = Carbon::parse($order->created_at ?? now())->addWeeks(4);
+        return Order::whereDate('created_at',[$order,$week]);
+    }
+
+    public static function orderIn6Week()
+    {
+        $order = Order::select('created_at')->first();
+        $week  = Carbon::parse($order->created_at ?? now())->addWeeks(6);
+        return Order::whereDate('created_at',[$order,$week]);
     }
 }

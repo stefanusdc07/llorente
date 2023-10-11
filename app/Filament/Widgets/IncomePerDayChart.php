@@ -34,7 +34,7 @@ class IncomePerDayChart extends ChartWidget implements HasPermissionWidgets
     {
         $data = Trend::query(
             Order::query()
-                ->where('payment_status', PaymentStatus::PAID)
+                ->where('payment_status', PaymentStatus::RECEIVE)
                 ->where('status', Status::COMPLETED)
         )
             ->between(

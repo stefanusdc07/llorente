@@ -6,6 +6,7 @@ namespace Domain\Shop\Stock\Models;
 
 use App\Helpers;
 use Domain\Shop\Branch\Models\Branch;
+use Domain\Shop\Order\Models\Order;
 use Domain\Shop\Product\Models\Sku;
 use Domain\Shop\Stock\Enums\StockType;
 use Illuminate\Database\Eloquent\Model;
@@ -98,13 +99,18 @@ class SkuStock extends Model
        return $sum;
     }
 
-    public static function summariesStock()
+    public static function summariesStock($payment=null)
     {
        $sum = 0;
        foreach (\Domain\Shop\Stock\Enums\StockType::cases() as $key => $type) {
-            $stock =  SkuStock::where('type',$type)->get();
-            foreach ($stock as $key => $value) {
-                $sum += $value->sku->price;
+            $orders = Order::has('orderItems')->get();
+            foreach ($orders as $key => $order) {
+                $skus = $order->whereHas('skuStocks',function($y) use($type){
+                    $y->where('type',$type);
+                })->get();
+                foreach ($skus as $key => $sku) {
+                    $sum = $sku->sum('price');
+                }
             }
        }
        return $sum;
