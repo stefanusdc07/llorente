@@ -6,6 +6,7 @@ namespace Domain\Shop\Stock\Models;
 
 use App\Helpers;
 use Domain\Shop\Branch\Models\Branch;
+use Domain\Shop\Order\Models\Order;
 use Domain\Shop\Product\Models\Sku;
 use Domain\Shop\Stock\Enums\StockType;
 use Illuminate\Database\Eloquent\Model;
@@ -80,5 +81,38 @@ class SkuStock extends Model
     public function sku(): BelongsTo
     {
         return $this->belongsTo(Sku::class);
+    }
+
+    public static function countStockWithType($type=null)
+    {
+        return SkuStock::where('type',$type)->count();
+    }
+
+    public static function sumStockWithType($type=null)
+    {
+       $sum = 0;
+       $stock =  SkuStock::where('type',$type)->get();
+       foreach ($stock as $key => $value) {
+            $sum += $value->sku->price;
+       }
+
+       return $sum;
+    }
+
+    public static function summariesStock($payment=null)
+    {
+       $sum = 0;
+       foreach (\Domain\Shop\Stock\Enums\StockType::cases() as $key => $type) {
+            $orders = Order::has('orderItems')->get();
+            foreach ($orders as $key => $order) {
+                $skus = $order->whereHas('skuStocks',function($y) use($type){
+                    $y->where('type',$type);
+                })->get();
+                foreach ($skus as $key => $sku) {
+                    $sum = $sku->sum('price');
+                }
+            }
+       }
+       return $sum;
     }
 }

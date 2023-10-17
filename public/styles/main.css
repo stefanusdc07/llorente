@@ -1,0 +1,130 @@
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+
+/*
+* === Default Overrides ===
+*/
+
+html {
+  @apply font-hk font-medium antialiased;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.container {
+  max-width: theme("screens.2xl");
+}
+
+/*
+* === Form Overrides ===
+*/
+
+.form-input,
+.form-textarea {
+  @apply w-full rounded border border-grey-darker py-3 px-5 font-hk font-normal text-secondary focus:border-primary focus:ring-primary;
+}
+
+.form-select {
+  @apply w-full rounded border border-grey-darker py-2 px-4 font-hk font-normal text-secondary-lighter  focus:border-primary focus:ring-primary;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23f35627' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
+.form-checkbox,
+.form-radio {
+  @apply rounded border border-grey-darker text-primary focus:ring-primary;
+}
+
+/*
+* === Tabs ===
+*/
+
+.tab-item.active {
+  @apply border-primary bg-grey-light;
+}
+
+.tab-pane {
+  @apply pointer-events-none absolute top-0 z-0 w-full opacity-0;
+
+  &.active {
+    @apply pointer-events-auto relative z-10 opacity-100;
+  }
+}
+
+/*
+* === Custom Classes ===
+*/
+
+.item-height {
+  @apply max-h-0;
+
+  &.active {
+    @apply max-h-infinite;
+  }
+}
+
+.c-hero-gradient-bg {
+  background-image: linear-gradient(
+    90deg,
+    rgba(55, 36, 31, 1) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/*
+* === Components ===
+*/
+
+.btn {
+  @apply inline-block rounded px-8 py-4 text-center font-hk font-semibold uppercase tracking-wide transition-all duration-300;
+
+  &:focus {
+    @apply outline-none;
+  }
+}
+
+.btn-primary {
+  @apply bg-primary text-white;
+
+  &:hover {
+    @apply bg-primary-light;
+  }
+}
+
+.btn-outline {
+  @apply border border-primary bg-white text-primary;
+
+  &:hover {
+    @apply bg-primary text-white;
+  }
+}
+
+.btn-lg {
+  @apply text-xl;
+}
+
+.btn-sm {
+  @apply text-sm;
+}
+
+/*
+* === Third Party Override ===
+*/
+
+.splide__pagination__page {
+  @apply inline-block
+   transition-colors hover:bg-secondary-lighter p-1 rounded-full mr-1 focus:outline-none cursor-pointer !important;
+   border: 1px solid theme('colors.primary') !important;
+   background: transparent !important;
+  &.is-active {
+    @apply bg-white !important;
+  }
+} 
+
+/* purgecss end ignore */
+
+@tailwind utilities;

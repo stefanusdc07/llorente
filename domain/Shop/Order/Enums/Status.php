@@ -12,10 +12,15 @@ use Illuminate\Support\Str;
 enum Status: string implements HasColor, HasIcon, HasLabel
 {
     case PENDING = 'pending';
-    case PREPARING = 'preparing';
+    case PREPARING = 'quote-proforma';
+    case CUSTOM_QUOTE='custom-quote';
     case IN_QUEUE = 'in-queue';
     case READY = 'ready';
-    case DISPATCHED = 'dispatched';
+    case DISPATCHED = 'transit';
+    case STAGING = 'staging';
+    case CSGN= 'CSGN';
+    case CSGN_ITEM_SOLD='CSGN Item Sold';
+    case EXPECTING_PAYMENT = 'expecting payment';
     case COMPLETED = 'completed';
     case CANCELED = 'canceled';
     case FAILED = 'failed';
@@ -24,8 +29,8 @@ enum Status: string implements HasColor, HasIcon, HasLabel
     {
         return match ($this) {
             self::COMPLETED => 'success',
-            self::READY, self::PREPARING, self::IN_QUEUE , self::DISPATCHED => 'warning',
-            self::CANCELED, self::FAILED => 'danger',
+            self::READY, self::PREPARING, self::IN_QUEUE , self::DISPATCHED , self::CUSTOM_QUOTE=> 'warning',
+            self::CANCELED, self::FAILED , self::EXPECTING_PAYMENT => 'danger',
             default => 'info',
         };
     }
@@ -38,9 +43,9 @@ enum Status: string implements HasColor, HasIcon, HasLabel
     public function getIcon(): ?string
     {
         return match ($this) {
-            self::COMPLETED => 'heroicon-o-check-circle',
-            self::READY, self::PREPARING, self::IN_QUEUE , self::DISPATCHED => 'heroicon-o-clock',
-            self::CANCELED, self::FAILED => 'heroicon-o-x-circle',
+            self::COMPLETED, self::STAGING, self::CSGN, => 'heroicon-o-check-circle',
+            self::READY, self::PREPARING, self::IN_QUEUE , self::DISPATCHED , self::CUSTOM_QUOTE => 'heroicon-o-clock',
+            self::CANCELED, self::FAILED, self::EXPECTING_PAYMENT, self::CSGN_ITEM_SOLD => 'heroicon-o-x-circle',
             default => 'heroicon-o-information-circle',
         };
     }

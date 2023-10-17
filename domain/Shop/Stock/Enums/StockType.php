@@ -11,8 +11,8 @@ use Illuminate\Support\Str;
 
 enum StockType: string implements HasColor, HasIcon, HasLabel
 {
-    case UNLIMITED = 'unlimited';
-    case BASE_ON_STOCK = 'base-on-stock';
+    case UNLIMITED = 'in Warehouse';
+    case BASE_ON_STOCK = 'Showrooms';
     case UNAVAILABLE = 'unavailable';
 
     public function getColor(): string|array|null

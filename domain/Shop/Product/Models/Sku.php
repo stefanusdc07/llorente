@@ -140,4 +140,5 @@ class Sku extends Model implements HasMedia, Sortable
     {
         return $this->hasMany(Cart::class);
     }
+
 }
