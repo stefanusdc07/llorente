@@ -34,7 +34,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
 
             $table->phpEnum('payment_method')->nullable();
-            $table->phpEnum('payment_status')->default(PaymentStatus::PENDING->value);
+            $table->phpEnum('payment_status')->default(PaymentStatus::DEPOSIT->value);
             $table->phpEnum('status')->default(Status::PENDING->value);
 
             $table->timestamps();

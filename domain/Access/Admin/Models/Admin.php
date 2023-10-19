@@ -102,8 +102,6 @@ class Admin extends Authenticatable implements FilamentUser, HasAvatar, HasTenan
         'email',
         'password',
         'timezone',
-        'theme',
-        'theme_color',
     ];
 
     /** @var array<int, string> */
