@@ -23,7 +23,7 @@ class NotifyAdminPipe
             ->get();
 
         Notification::make()
-            ->title('Order '.$orderPipelineData->order->receipt_number.' created')
+            ->title('Order ' . $orderPipelineData->order->receipt_number . ' created')
             ->body(
                 sprintf(
                     'Order created with price amount %s',

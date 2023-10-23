@@ -11,6 +11,7 @@ use App\Filament\Pages\HealthCheckResults;
 use App\Http\Middleware\CheckMainAdminPanel;
 use App\Livewire\InventoryWidget;
 use App\Livewire\ProductionStatusWidget;
+use App\Livewire\Sales;
 use App\Providers\Filament\Versions\AppVersionProvider;
 use App\Providers\Filament\Versions\LivewireVersionProvider;
 use App\Providers\Macros\FilamentRadioMixin;
@@ -72,6 +73,7 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\FilamentInfoWidget::class,
                 InventoryWidget::class,
                 ProductionStatusWidget::class,
+                Sales::class,
                 VersionsWidget::class,
             ])
             ->middleware([
@@ -128,11 +130,11 @@ class AdminPanelProvider extends PanelProvider
                     ->sort(4)
                     ->visible(function (): bool {
 
-                        if (! class_exists('\Laravel\Telescope\TelescopeServiceProvider')) {
+                        if (!class_exists('\Laravel\Telescope\TelescopeServiceProvider')) {
                             return false;
                         }
 
-                        if (! config('telescope.enabled')) {
+                        if (!config('telescope.enabled')) {
                             return false;
                         }
 
