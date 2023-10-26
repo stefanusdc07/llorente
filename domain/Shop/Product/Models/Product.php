@@ -141,14 +141,19 @@ class Product extends Model implements HasMedia, Sortable
         return $this->belongsTo(Category::class);
     }
 
-    public static function countProductWithStatus($status=null)
+    public function getPrice()
     {
-        return Product::where('status',$status)->count();
+        return Sku::whereProductId($this->id)->first()->price;
     }
 
-    public static function sumProductWithStatus($status=null)
+    public static function countProductWithStatus($status = null)
     {
-        $product= Product::where('status',$status)->with('skus')->get();
+        return Product::where('status', $status)->count();
+    }
+
+    public static function sumProductWithStatus($status = null)
+    {
+        $product = Product::where('status', $status)->with('skus')->get();
         $value = 0;
         foreach ($product as $key => $value) {
             $value += $value->skus->sum('price');

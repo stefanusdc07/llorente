@@ -11,6 +11,7 @@ use App\Filament\Pages\HealthCheckResults;
 use App\Http\Middleware\CheckMainAdminPanel;
 use App\Livewire\InventoryWidget;
 use App\Livewire\ProductionStatusWidget;
+use App\Livewire\Sales;
 use App\Providers\Filament\Versions\AppVersionProvider;
 use App\Providers\Filament\Versions\LivewireVersionProvider;
 use App\Providers\Macros\FilamentRadioMixin;
@@ -72,6 +73,7 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\FilamentInfoWidget::class,
                 InventoryWidget::class,
                 ProductionStatusWidget::class,
+                Sales::class,
                 VersionsWidget::class,
             ])
             ->middleware([
@@ -103,12 +105,12 @@ class AdminPanelProvider extends PanelProvider
                     ->label(fn () => trans('System')),
             ])
             ->navigationItems([
-                NavigationItem::make('API Documentation')
-                    ->url(fn () => route('scramble.docs.api'), shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-book-open')
-                    ->group(fn () => trans('Documentation'))
-                    ->sort(1)
-                    ->visible(fn () => Filament::auth()->user()?->can('viewApiDocs') ?? false),
+                // NavigationItem::make('API Documentation')
+                //     ->url(fn () => route('scramble.docs.api'), shouldOpenInNewTab: true)
+                //     ->icon('heroicon-o-book-open')
+                //     ->group(fn () => trans('Documentation'))
+                //     ->sort(1)
+                //     ->visible(fn () => Filament::auth()->user()?->can('viewApiDocs') ?? false),
                 NavigationItem::make('Log Viewer')
                     ->url(fn () => route('log-viewer.index'), shouldOpenInNewTab: true)
                     ->icon('heroicon-o-fire')
@@ -128,11 +130,11 @@ class AdminPanelProvider extends PanelProvider
                     ->sort(4)
                     ->visible(function (): bool {
 
-                        if (! class_exists('\Laravel\Telescope\TelescopeServiceProvider')) {
+                        if (!class_exists('\Laravel\Telescope\TelescopeServiceProvider')) {
                             return false;
                         }
 
-                        if (! config('telescope.enabled')) {
+                        if (!config('telescope.enabled')) {
                             return false;
                         }
 

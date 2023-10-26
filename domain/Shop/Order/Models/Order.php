@@ -117,7 +117,7 @@ class Order extends Model
         return $this->belongsTo(Admin::class);
     }
 
-    /** @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\Domain\Shop\Customer\Models\Customer, \Domain\Shop\Order\Models\Order> */
+    /** @return \Illuminatme\Database\Eloquent\Relations\BelongsTo<\Domain\Shop\Customer\Models\Customer, \Domain\Shop\Order\Models\Order> */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
@@ -133,13 +133,147 @@ class Order extends Model
     {
         $order = Order::select('created_at')->first();
         $week  = Carbon::parse($order->created_at ?? now())->addWeeks(4);
-        return Order::whereDate('created_at',[$order,$week]);
+        return Order::whereDate('created_at', [$order, $week]);
     }
 
     public static function orderIn6Week()
     {
         $order = Order::select('created_at')->first();
         $week  = Carbon::parse($order->created_at ?? now())->addWeeks(6);
-        return Order::whereDate('created_at',[$order,$week]);
+        return Order::whereDate('created_at', [$order, $week]);
+    }
+
+    protected static function SalesMonth($month)
+    {
+        $order = Order::whereMonth('created_at', $month);
+
+        return $order;
+    }
+
+    public static function countSalesMonth($month = null)
+    {
+        $month = $month ?? now()->month();
+        return Order::SalesMonth($month)->count();
+    }
+
+    public static function sumPriceSalesMonth($month = null)
+    {
+        $month = $month ?? now()->month();
+        $sum = 0;
+        $orders = Order::SalesMonth($month)->get();
+        foreach ($orders as $key => $order) {
+            $sum += $order->orderItems->sum('price');
+        }
+
+        return $sum;
+    }
+
+    public static function countProductWithStatus($status = null, $month = null, $year = null)
+    {
+        $month = $month ?? now()->month();
+        return Order::where('status', $status)->whereMonth('created_at', $month)->count();
+    }
+
+    public static function sumProductWithStatus($status = null, $month = null)
+    {
+        $month = $month ?? now()->month();
+        $Orders = Order::where('status', $status)->whereMonth('created_at', $month)->get();
+        $data = 0;
+        foreach ($Orders as $key => $order) {
+            $data += $order->orderItems->sum('price');
+        }
+
+        return $data;
+    }
+
+    protected static function SalesYear($year)
+    {
+        $order = Order::whereYear('created_at', $year);
+
+        return $order;
+    }
+
+    public static function countSalesYear($year = null)
+    {
+        $year = $year ?? now()->year();
+        return Order::SalesYear($year)->count();
+    }
+
+    public static function sumPriceSalesYear($year = null)
+    {
+        $year = $year ?? now()->year();
+        $sum = 0;
+        $orders = Order::SalesMonth($year)->get();
+        foreach ($orders as $key => $order) {
+            $sum += $order->orderItems->sum('price');
+        }
+
+        return $sum;
+    }
+
+    public static function countProductWithStatusYear($status = null, $year = null)
+    {
+        $year = $year ?? now()->year();
+        return Order::where('status', $status)->whereYear('created_at', $year)->count();
+    }
+
+    public static function sumProductWithStatusYear($status = null, $year = null)
+    {
+        $year = $year ?? now()->year();
+        $Orders = Order::where('status', $status)->whereYear('created_at', $year)->get();
+        $data = 0;
+        foreach ($Orders as $key => $order) {
+            $data += $order->orderItems->sum('price');
+        }
+
+        return $data;
+    }
+
+    public static function countOrderQ1()
+    {
+        $now = now();
+        $start = $now->month(1)->startOfMonth();
+        $end = $now->month(3)->endOfMonth();
+        $order = Order::whereBetween('created_at', [$start->toDateString(), $end->toDateString()])->count();
+
+        return $order;
+    }
+
+    public static function sumOrderQ1()
+    {
+        $now = now();
+        $start = $now->month(1)->startOfMonth();
+        $end = $now->month(3)->endOfMonth();
+        $orders = Order::whereBetween('created_at', [$start->toDateString(), $end->toDateString()])->get();
+        $sum = 0;
+        foreach ($orders as $key => $order) {
+            $sum += $order->orderItems->sum('price');
+        }
+
+        return $sum;
+    }
+
+    public static function countOrderQ2()
+    {
+        $now = now();
+        $start = $now->month(3)->startOfMonth();
+        $end = $now->month(6)->endOfMonth();
+        $order = Order::whereBetween('created_at', [$start->toDateString(), $end->toDateString()])->count();
+
+        return $order;
+    }
+
+    public static function sumOrderQ2()
+    {
+        $now = now();
+        $start = $now->month(3)->startOfMonth();
+        $end = $now->month(6)->endOfMonth();
+        $orders = Order::whereBetween('created_at', [$start->toDateString(), $end->toDateString()])->get();
+        $sum = 0;
+        foreach ($orders as $key => $order) {
+            $sum += $order->orderItems->sum('price');
+        }
+
+        return $sum;
     }
 }

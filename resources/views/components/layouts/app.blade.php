@@ -21,11 +21,24 @@
     
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
-<body>
+<body class="font-sans antialiased" x-data="{ darkMode: false }" x-init="
+    if (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      localStorage.setItem('darkMode', JSON.stringify(true));
+    }
+    darkMode = JSON.parse(localStorage.getItem('darkMode'));
+    $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))" x-cloak>
+        <div x-bind:class="{'dark' : darkMode === true}" class="min-h-screen bg-gray-100">>
     <div id="app">
          @include('layouts.navbar')
-        <main class="py-4">
+        <main class="py-4 bg-gray-100 dark:bg-gray-800">
             @yield('content')
+             <script>
+        @if(session()->has('success'))
+            toastr.success('{{ session('success') }}')
+        @elseif(session()->has('error'))
+            toastr.error('{{ session('error') }}')
+        @endif
+    </script>
         </main>
         {{ $slot }}
     </div>

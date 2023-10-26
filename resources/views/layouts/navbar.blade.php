@@ -13,7 +13,7 @@
 
 
 
-  >
+  <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 dark:bg-gray-800">
     <div x-data="app">
       <div class="container relative">
   
@@ -100,7 +100,7 @@
           />
         </a>
 
-        <a
+        {{-- <a
           href="/cart/index"
           class="group ml-2 hidden rounded-full border-2 border-transparent p-2 transition-all hover:border-primary sm:ml-3 sm:p-4 md:ml-5 lg:ml-8 lg:block"
         >
@@ -115,6 +115,7 @@
             alt="icon cart hover"
           />
         </a>
+    
 
         <span
           @click="mobileCart = !mobileCart"
@@ -131,7 +132,43 @@
             alt="icon cart hover"
           />
         </span>
-      </div>
+      </div> --}}
+
+<div class=" ml-2">
+                        <button type="button" x-bind:class="darkMode ? 'bg-indigo-500' : 'bg-gray-200'"
+                            x-on:click="darkMode = !darkMode"
+                            class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            role="switch" aria-checked="false">
+                            <span class="sr-only">Dark mode toggle</span>
+                            <span x-bind:class="darkMode ? 'translate-x-5 bg-gray-700' : 'translate-x-0 bg-white'"
+                                class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full shadow ring-0 transition duration-200 ease-in-out">
+                                <span
+                                    x-bind:class="darkMode ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'"
+                                    class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                    aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-400"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                                    </svg>
+                                </span>
+                                <span
+                                    x-bind:class="darkMode ?  'opacity-100 ease-in duration-200' : 'opacity-0 ease-out duration-100'"
+                                    class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity"
+                                    aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+
+
       <div class="hidden">
         <i
           class="bx bx-menu text-3xl text-primary"
@@ -145,7 +182,7 @@
         <li class="mr-10">
           <a
             href="/"
-            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary text-white transition-all hover:border-primary hover:font-bold hover:text-primary"
+            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary transition-all hover:border-primary hover:font-bold hover:text-primary dark:bg-gray-800 dark:border-gray-700 dark:text-white text-black"
             >Home</a
           >
         </li>
@@ -153,117 +190,52 @@
         <li class="mr-10">
           <a
             href="/about"
-            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary text-white transition-all hover:border-primary hover:font-bold hover:text-primary"
+            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary transition-all hover:border-primary hover:font-bold hover:text-primary dark:bg-gray-800 dark:border-gray-700 dark:text-white text-black"
             >About</a
           >
         </li>
-          
-        <li class="group mr-10 hidden lg:block">
-          <div
-            class="flex items-center border-b-2 border-white transition-colors group-hover:border-primary"
-          >
-            <span
-              class="cursor-pointer px-2 font-hk text-lg text-secondary text-white transition-all group-hover:font-bold group-hover:text-primary"
-              >Collections</span
-            >
-            <i
-              class="bx bx-chevron-down px-2 pl-2 text-secondary transition-colors group-hover:text-primary"
-            ></i>
-          </div>
-          <div
-            class="pointer-events-none absolute top-0 left-0 right-0 z-50 mx-auto mt-40 w-2/3 pt-10 opacity-0 group-hover:pointer-events-auto group-hover:opacity-100"
-          >
-            <div
-              class="relative flex rounded-b bg-white p-8 shadow-lg transition-all"
-            >
-              
-              <div class="relative z-20 flex-1">
-                <h4 class="font-hkbold mb-2 text-base text-secondary">
-                  Man
-                </h4>
-                <ul>
-                  
-                  <li>
-                    <a
-                      href="/collection-grid"
-                      class="border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter"
-                      >Boots</a
-                    >
-                  </li>
-                  
-                  <li>
-                    <a
-                      href="/collection-grid"
-                      class="border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter"
-                      >Blutcher Boot</a
-                    >
-                  </li>
-                  
-                  <li>
-                    <a
-                      href="/collection-grid"
-                      class="border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter"
-                      >Chelsea Boot</a
-                    >
-                  </li>
-                  
-                  <li>
-                    <a
-                      href="/collection-grid"
-                      class="border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter"
-                      >Chukka Boot</a
-                    >
-                  </li>
-                  
-                  <li>
-                    <a
-                      href="/collection-grid"
-                      class="border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter"
-                      >Dress Boot</a
-                    >
-                  </li>
-                  
-                  <li>
-                    <a
-                      href="/collection-grid"
-                      class="border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter"
-                      >Work Boot</a
-                    >
-                  </li>
-                  
-                </ul>
-              </div>
-              
-              <div class="flex-1">
-                <div
-                  class="absolute inset-0 z-0 bg-contain bg-right-bottom bg-no-repeat"
-                  style="background-image: url(https://source.unsplash.com/1000x640/?-menu)"
-                ></div>
-              </div>
-            </div>
-          </div>
-        </li>
-          
-        <li class="mr-10">
+
+         <li class="mr-10">
           <a
-            href="/blog"
-            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary text-white transition-all hover:border-primary hover:font-bold hover:text-primary"
-            >Blog</a
+            href="/all"
+            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary transition-all hover:border-primary hover:font-bold hover:text-primary dark:bg-gray-800 dark:border-gray-700 dark:text-white text-black"
+            >All</a
           >
         </li>
           
-        <li class="mr-10">
-          <a
-            href="/contact#faq"
-            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary text-white transition-all hover:border-primary hover:font-bold hover:text-primary"
-            >FAQ</a
-          >
-        </li>
+    <li class="relative group mr-10 hidden lg:block">
+  <div class="flex items-center border-b-2 border-transparent transition-colors group-hover:border-primary">
+    {{-- <span class="cursor-pointer px-2 font-hk text-lg text-secondary text-white transition-all group-hover:font-bold group-hover:text-primary dark:bg-gray-800 dark:border-gray-700 dark:text-white text-black">Tables</span> --}}
+    <i class="bx bx-chevron-down px-2 pl-2 text-secondary transition-colors group-hover:text-primary"></i>
+  </div>
+  <div class="mega-menu pointer-events-none absolute top-16 left-0 right-0 z-50 mx-auto w-2/3 pt-10 opacity-0 group-hover:pointer-events-auto group-hover:opacity-100">
+    <div class="relative flex rounded-b p-8 shadow-lg transition-all bg-gray-400"> <!-- Change background to grey (bg-gray-400) -->
+      <div class="relative z-20 flex-1 text-center">
+        {{-- <h4 class="font-hkbold mb-2 text-base text-secondary">Man</h4> --}}
+        <ul>
+          <li>
+            {{-- <a href="/collection-grid" class="block border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter hover:text-primary">Boots</a>
+          </li>
+          <li>
+            <a href="/collection-grid" class="block border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter hover:text-primary">Blutcher Boot</a>
+          </li>
+          <li>
+            <a href="/collection-grid" class="block border-b border-transparent font-hk text-sm leading-loose text-secondary-lighter hover:border-secondary-lighter hover:text-primary">Chelsea Boot</a>
+          </li> --}}
+          <!-- Other menu items -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</li>
+
+
+
           
         <li class="mr-10">
           <a
             href="/contact"
-            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary text-white transition-all hover:border-primary hover:font-bold hover:text-primary"
+            class="block border-b-2 border-white px-2 font-hk text-lg text-secondary transition-all hover:border-primary hover:font-bold hover:text-primary dark:bg-gray-800 dark:border-gray-700 dark:text-white text-black"
             >Contact</a
           >
         </li>
